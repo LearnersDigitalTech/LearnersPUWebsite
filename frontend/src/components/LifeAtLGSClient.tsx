@@ -334,7 +334,7 @@ const LifeAtLGSClient: React.FC<LifeAtLGSClientProps> = ({ initialGalleryItems }
             content: (
                 <>
                     <div className="relative w-full h-64 mb-6">
-                        <Image src="" alt="Canteen" fill className="object-cover rounded-lg" />
+                        <Image src="/canteen/canteen1.jpg" alt="Canteen" fill className="object-cover rounded-lg" />
                     </div>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div>
@@ -551,9 +551,9 @@ const LifeAtLGSClient: React.FC<LifeAtLGSClientProps> = ({ initialGalleryItems }
                         </div>
 
                         {/* Canteen */}
-                        <div className="bg-white rounded-2xl p-6 shadow-lg cursor-pointer hover:-translate-y-2 transition-transform duration-300" onClick={() => window.open('https://google.com', '_blank')}>
+                        <div className="bg-white rounded-2xl p-6 shadow-lg cursor-pointer hover:-translate-y-2 transition-transform duration-300" onClick={() => setSelectedFacility('canteen')}>
                             <div className="mb-4 relative h-48 w-full">
-                                <Image src="/resources/canteen.jpg" alt="Canteen" fill className="object-cover rounded-lg" />
+                                <Image src="/canteen/canteen1.jpg" alt="Canteen" fill className="object-cover rounded-lg" />
                             </div>
                             <div className="text-center">
                                 <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
