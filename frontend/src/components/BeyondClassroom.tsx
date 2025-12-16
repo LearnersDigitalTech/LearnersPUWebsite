@@ -107,11 +107,11 @@ const BeyondClassroom = () => {
                 <h3 className="font-display text-3xl font-bold text-sky-800 mb-12 text-center">Inspirational Sessions & Events</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {[
-                        { id: 'y4HTKNWB-vo', title: 'Guruji Art of Living' },
-                        { id: 'biN-LIpmBos', title: 'Narayana Murthy Speech' },
-                        { id: 'HEuP7yAAxUo', title: 'Anand Kumar Speech' },
-                        { id: '6ZnuvnzSo54', title: 'Murali Mohan Speech' },
-                        { id: '5i_6Sz7bPK8', title: 'Satya Prasad Speech' },
+                        { id: 'y4HTKNWB-vo', title: 'Sri Sri Guruji Art of Living' },
+                        { id: 'biN-LIpmBos', title: 'Mr. Narayana Murthy Speech' },
+                        { id: 'HEuP7yAAxUo', title: 'Mr. Anand Kumar Speech' },
+                        { id: '6ZnuvnzSo54', title: 'Mr. Murali Mohan Speech' },
+                        { id: '5i_6Sz7bPK8', title: 'Mr. Satya Prasad Speech' },
                         { id: 'DhdTpl2aMFc', title: 'Learners Utsava' }
                     ].map((video, index) => (
                         <div
