@@ -1,0 +1,4 @@
+.env
+__pycache__
+learners_college.db
+README.md

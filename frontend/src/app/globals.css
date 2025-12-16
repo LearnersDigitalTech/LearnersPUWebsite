@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+:root {
+  /* Primary Colors */
+  --primary: #1E88E5;
+  --background: #FAFBFD;
+  --foreground: #0F172A;
+
+  /* Secondary & Accents */
+  --secondary: #F1F5F9;
+  --accent: #1E88E5;
+  --muted: #64748B;
+  --border: #E2E8F0;
+  --destructive: #EF4444;
+
+  /* Cards & Popovers */
+  --card: #FFFFFF;
+  --popover: #FFFFFF;
+
+  /* Radius */
+  --radius: 0.5rem;
+
+  /* Spacing */
+  --spacing-1: 8px;
+  --spacing-2: 16px;
+  --spacing-3: 24px;
+  --spacing-4: 32px;
+  --spacing-6: 48px;
+  --spacing-8: 64px;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-card: var(--card);
+  --color-popover: var(--popover);
+
+  --font-sans: var(--font-poppins);
+
+  --radius-DEFAULT: var(--radius);
+
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Typography Headings */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+@media (min-width: 1024px) {
+  h2 {
+    font-size: 2.5rem;
+  }
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+@media (min-width: 1024px) {
+  h3 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Body Text */
+body {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+small,
+.text-small {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+/* Hide Google Translate Top Banner */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+/* Hide the Google Translate Tooltip */
+.goog-tooltip {
+  display: none !important;
+}
+
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Hide the element we created */
+#google_translate_element {
+  display: none !important;
+}
+
+/* Hide the iframe that Google injects */
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+/* Hide the "Original text" popup */
+#goog-gt-tt {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Ensure our content is visible */
+body>.skiptranslate {
+  display: none !important;
+}
