@@ -45,7 +45,7 @@ const Achievers = () => {
     // leading to empty white boxes. Raw iframes are cloned as HTML and work correctly.
 
     return (
-        <section ref={sectionRef} className="py-20 bg-white opacity-0">
+        <section ref={sectionRef} className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h2 className="font-display text-3xl md:text-4xl font-bold text-sky-800 mb-4">{t('section-achievers')}</h2>
@@ -111,5 +111,6 @@ const Achievers = () => {
         </section>
     );
 };
+
 
 export default Achievers;
