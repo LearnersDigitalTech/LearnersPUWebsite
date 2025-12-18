@@ -60,7 +60,7 @@ const LifeAtLGSClient: React.FC<LifeAtLGSClientProps> = ({ initialGalleryItems }
             achievement: "Board Exam Topper",
             description: "Secured top rank in the district",
             year: "2024",
-            image: "/popup/02.png",
+            image: "/popup/002.png",
             details: "Achieved highest marks in the annual examinations."
         },
         {
@@ -70,7 +70,7 @@ const LifeAtLGSClient: React.FC<LifeAtLGSClientProps> = ({ initialGalleryItems }
             achievement: "Distinction Holder",
             description: "Consistent academic excellence",
             year: "2024",
-            image: "/popup/03.png",
+            image: "/popup/003.png",
             details: "Maintained distinction throughout the academic year."
         },
         {
@@ -80,7 +80,7 @@ const LifeAtLGSClient: React.FC<LifeAtLGSClientProps> = ({ initialGalleryItems }
             achievement: "Subject Excellence",
             description: "Highest marks in core subjects",
             year: "2024",
-            image: "/popup/04.png",
+            image: "/popup/004.png",
             details: "Expertise and in-depth knowledge in core subjects."
         },
 
