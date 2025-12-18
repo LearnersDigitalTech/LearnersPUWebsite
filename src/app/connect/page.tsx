@@ -10,6 +10,7 @@ type InquiryType = 'admission' | 'course' | 'fee' | 'scholarship' | 'facility' |
 const Connect = () => {
     // State
     const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
 
 
@@ -23,11 +24,12 @@ const Connect = () => {
 
     const handleInquirySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Form submitted");
         const form = e.target as HTMLFormElement;
+        setIsSubmitting(true);
 
         try {
             const formData = {
+                type: 'inquiry',
                 firstName: (form.elements.namedItem('firstName') as HTMLInputElement).value,
                 lastName: (form.elements.namedItem('lastName') as HTMLInputElement).value,
                 email: (form.elements.namedItem('email') as HTMLInputElement).value,
@@ -36,9 +38,8 @@ const Connect = () => {
                 message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
                 newsletter: (form.elements.namedItem('newsletter') as HTMLInputElement)?.checked ? "Yes" : "No",
             };
-            console.log("Form data collected:", formData);
 
-            const response = await fetch('http://localhost:5000/api/enquiries', {
+            const response = await fetch('/api/proxy', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,17 +49,20 @@ const Connect = () => {
 
             if (response.ok) {
                 const result = await response.json();
-                console.log("Response:", result);
-                showNotification('Message sent successfully! We will contact you within 24 hours.', 'success');
-                form.reset();
+                if (result.result === 'success') {
+                    showNotification('Message sent successfully! We will contact you within 24 hours.', 'success');
+                    form.reset();
+                } else {
+                    showNotification(result.error || "Failed to send message. Try again!", "error");
+                }
             } else {
-                const error = await response.json();
-                console.error("Error response:", error);
-                showNotification(error.error || "Failed to send message. Try again!", "error");
+                showNotification("Failed to send message. Try again!", "error");
             }
         } catch (error) {
             console.error("Error submitting form:", error);
             showNotification("Failed to send message. Try again!", "error");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -141,8 +145,12 @@ const Connect = () => {
 
 
 
-                                <button type="submit" className="w-full bg-blue-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors duration-300">
-                                    Send Message
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className={`w-full bg-blue-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors duration-300 cursor-pointer ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                >
+                                    {isSubmitting ? 'Processing...' : 'Send Message'}
                                 </button>
                             </form>
                         </div>
@@ -153,12 +161,13 @@ const Connect = () => {
                                 <h3 className="font-display text-2xl font-semibold text-blue-900 mb-6">Visit Our Campus</h3>
                                 <div className="bg-gray-200 h-64 rounded-lg mb-6 overflow-hidden relative">
                                     <iframe
-                                        src="https://maps.google.com/maps?q=1152%2C%206th%20Main%2C%20Vijayanagar%201st%20Stage%2C%20Mysore%20-%20570017&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d463.1090673317082!2d76.615023!3d12.334024!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baf7af580c40ee3%3A0x24de657c5afc89df!2sLearners%20PU%20College!5e1!3m2!1sen!2sin!4v1766039700102!5m2!1sen!2sin"
                                         width="100%"
                                         height="100%"
                                         style={{ border: 0 }}
                                         allowFullScreen
                                         loading="lazy"
+                                        referrerPolicy="no-referrer-when-downgrade"
                                         title="Learners PU College Map"
                                     ></iframe>
                                 </div>
