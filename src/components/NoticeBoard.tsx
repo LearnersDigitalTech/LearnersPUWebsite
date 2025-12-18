@@ -110,7 +110,10 @@ const NoticeBoard: React.FC<NoticeBoardProps> = ({ initialSlides = [] }) => {
             duration: 400,
             delay: 100,
             easing: 'easeInQuad',
-            complete: () => setIsOpen(false)
+            complete: () => {
+                setIsOpen(false);
+                window.dispatchEvent(new CustomEvent('notice-board-closed'));
+            }
         });
     };
 
