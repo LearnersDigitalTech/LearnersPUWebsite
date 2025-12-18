@@ -6,6 +6,7 @@ import GoogleTranslate from '../components/GoogleTranslate';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import FloatingContact from '../components/FloatingContact';
+import MathClubPopup from '../components/MathClubPopup';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -29,6 +30,7 @@ export default function RootLayout({
         <LanguageProvider>
           <GoogleTranslate />
           <Navbar />
+          <MathClubPopup />
           <FloatingContact />
           <main>{children}</main>
           <Footer />
