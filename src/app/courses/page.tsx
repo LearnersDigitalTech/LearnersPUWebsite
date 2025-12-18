@@ -8,6 +8,7 @@ import anime from 'animejs';
 const Courses = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         // Animate cards on scroll
@@ -34,10 +35,49 @@ const Courses = () => {
         setSelectedCourse(null);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert('Application submitted successfully! We will contact you soon.');
-        closeAdmissionModal();
+        const form = e.target as HTMLFormElement;
+        setIsSubmitting(true);
+
+        try {
+            const formData = {
+                type: 'admission',
+                firstName: (form.elements.namedItem('firstName') as HTMLInputElement).value,
+                lastName: (form.elements.namedItem('lastName') as HTMLInputElement).value,
+                email: (form.elements.namedItem('email') as HTMLInputElement).value,
+                phone: (form.elements.namedItem('phone') as HTMLInputElement).value,
+                course: (form.elements.namedItem('course') as HTMLSelectElement).value,
+                grade: (form.elements.namedItem('grade') as HTMLInputElement).value,
+                message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+            };
+
+            const response = await fetch('/api/proxy', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                if (result.result === 'success') {
+                    alert('Application submitted successfully! We will contact you soon.');
+                    form.reset();
+                    closeAdmissionModal();
+                } else {
+                    alert(result.error || "Failed to submit application. Try again!");
+                }
+            } else {
+                alert("Failed to submit application. Try again!");
+            }
+        } catch (error) {
+            console.error("Error submitting application:", error);
+            alert("Failed to submit application. Try again!");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -426,7 +466,13 @@ const Courses = () => {
 
                                 <div className="flex justify-end pt-4">
                                     <button type="button" onClick={closeAdmissionModal} className="mr-4 px-6 py-2 text-gray-600 hover:text-gray-800 font-medium">Cancel</button>
-                                    <button type="submit" className="px-6 py-2 bg-blue-900 text-white rounded-lg font-medium hover:bg-blue-800 transition-colors">Submit Application</button>
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className={`px-6 py-2 bg-blue-900 text-white rounded-lg font-medium hover:bg-blue-800 transition-colors cursor-pointer ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                    >
+                                        {isSubmitting ? 'Processing...' : 'Submit Application'}
+                                    </button>
                                 </div>
                             </form>
                         </div>

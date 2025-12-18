@@ -6,6 +6,7 @@ type PositionType = 'mathematics-faculty' | 'biology-teacher' | 'academic-counse
 
 const Careers = () => {
     const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const showNotification = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
         setNotification({ message, type });
@@ -15,46 +16,58 @@ const Careers = () => {
     const handleCareerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
-        
-        try {
-            const formData = new FormData();
-            
-            // Add form fields
-            formData.append('fullName', (form.elements.namedItem('fullName') as HTMLInputElement).value);
-            formData.append('email', (form.elements.namedItem('email') as HTMLInputElement).value);
-            formData.append('phone', (form.elements.namedItem('phone') as HTMLInputElement).value);
-            formData.append('position', (form.elements.namedItem('position') as HTMLSelectElement).value);
-            formData.append('experience', (form.elements.namedItem('experience') as HTMLSelectElement).value);
-            formData.append('currentSalary', (form.elements.namedItem('currentSalary') as HTMLInputElement).value);
-            formData.append('qualification', (form.elements.namedItem('qualification') as HTMLInputElement).value);
-            formData.append('coverLetter', (form.elements.namedItem('coverLetter') as HTMLTextAreaElement).value);
-            
-            // Add file if selected
-            const resumeFile = (form.elements.namedItem('resume') as HTMLInputElement).files?.[0];
-            if (resumeFile) {
-                formData.append('resume', resumeFile);
-            }
+        setIsSubmitting(true);
 
-            const response = await fetch('http://localhost:5000/api/careers', {
+        try {
+            const formData: any = {
+                type: 'career',
+                fullName: (form.elements.namedItem('fullName') as HTMLInputElement).value,
+                email: (form.elements.namedItem('email') as HTMLInputElement).value,
+                phone: (form.elements.namedItem('phone') as HTMLInputElement).value,
+                position: (form.elements.namedItem('position') as HTMLSelectElement).value,
+                experience: (form.elements.namedItem('experience') as HTMLSelectElement).value,
+                currentSalary: (form.elements.namedItem('currentSalary') as HTMLInputElement).value,
+                qualification: (form.elements.namedItem('qualification') as HTMLInputElement).value,
+                coverLetter: (form.elements.namedItem('coverLetter') as HTMLTextAreaElement).value,
+                resumeLink: (form.elements.namedItem('resumeLink') as HTMLInputElement).value,
+            };
+
+            await submitData(formData, form);
+
+        } catch (error) {
+            console.error("Error submitting application:", error);
+            showNotification("Failed to submit application. Try again!", "error");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const submitData = async (data: any, form: HTMLFormElement) => {
+        try {
+            const response = await fetch('/api/proxy', {
                 method: "POST",
-                body: formData,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
             });
 
             if (response.ok) {
                 const result = await response.json();
-                console.log("Response:", result);
-                showNotification('Application submitted successfully! We will review and get back to you soon.', 'success');
-                form.reset();
+                if (result.result === 'success') {
+                    showNotification('Application submitted successfully! We will review and get back to you soon.', 'success');
+                    form.reset();
+                } else {
+                    showNotification(result.error || "Failed to submit application. Try again!", "error");
+                }
             } else {
-                const error = await response.json();
-                console.error("Error response:", error);
-                showNotification(error.error || "Failed to submit application. Try again!", "error");
+                showNotification("Failed to submit application. Try again!", "error");
             }
         } catch (error) {
-            console.error("Error submitting application:", error);
+            console.error("Error sending data:", error);
             showNotification("Failed to submit application. Try again!", "error");
         }
-    };
+    }
 
     return (
         <div className="bg-white relative">
@@ -143,17 +156,8 @@ const Careers = () => {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Resume Upload</label>
-                                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-white">
-                                            <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                                            </svg>
-                                            <p className="text-gray-600 mb-2">Upload your resume (PDF, DOC, DOCX)</p>
-                                            <button type="button" onClick={() => document.getElementById('resumeUpload')?.click()} className="bg-blue-900 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-800 transition-colors">
-                                                Choose File
-                                            </button>
-                                            <input type="file" id="resumeUpload" name="resume" accept=".pdf,.doc,.docx" className="hidden" />
-                                        </div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">Resume Link (Google Drive) *</label>
+                                        <input type="url" name="resumeLink" required className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" placeholder="Paste your Google Drive link here (ensure it is accessible to anyone with the link)" />
                                     </div>
 
                                     <div className="flex items-center">
@@ -163,8 +167,12 @@ const Careers = () => {
                                         </label>
                                     </div>
 
-                                    <button type="submit" className="w-full bg-blue-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors">
-                                        Submit Application
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className={`w-full bg-blue-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors cursor-pointer ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                    >
+                                        {isSubmitting ? 'Processing...' : 'Submit Application'}
                                     </button>
                                 </form>
                             </div>
