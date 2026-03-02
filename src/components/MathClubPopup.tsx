@@ -68,7 +68,7 @@ const MathClubPopup = () => {
             )}
 
             <a
-                href="http://math100.learnersdigital.com"
+                href="https://skill100.ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`group relative flex items-center justify-center bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all duration-300
