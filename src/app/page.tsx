@@ -16,8 +16,11 @@ export default async function Home() {
   try {
     if (fs.existsSync(popupDir)) {
       const files = fs.readdirSync(popupDir);
+      // Filter out unwanted old images and keep new ones
+      const excludedFiles = ['2.jpg', '3.jpeg', '4.jpg'];
       popupSlides = files
-        .filter(file => /\.(jpg|jpeg|png|gif|webp|mp4|webm)$/i.test(file))
+        .filter(file => /^00[0-9].*\.(jpg|jpeg|png|gif|webp|mp4|webm)$/i.test(file))
+        .sort()
         .map(file => ({
           type: /\.(mp4|webm)$/i.test(file) ? 'video' : 'image' as 'video' | 'image',
           src: `/popup/${file}`,

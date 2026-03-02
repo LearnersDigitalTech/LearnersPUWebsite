@@ -143,7 +143,7 @@ const Hero = () => {
                                 {t('hero-btn-visit')}
                             </Link>
                         </div>
-                        <div
+                        {/* <div
                             ref={statsRef}
                             className="grid grid-cols-3 gap-4 sm:gap-8 pt-8 opacity-0"
                         >
@@ -165,7 +165,7 @@ const Hero = () => {
                                 </div>
                                 <div className="text-sm text-gray-600">{t('stat-faculty')}</div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* Right side intentionally left empty for video visibility */}
