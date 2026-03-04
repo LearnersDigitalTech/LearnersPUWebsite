@@ -58,7 +58,7 @@ const MathClubPopup = () => {
             </div> */}
 
             <h3 className={`font-bold text-slate-900 leading-tight transition-all duration-1000 ${isDocked ? 'text-sm mb-2' : 'text-xl mb-3'}`}>
-                {isDocked ? "Join the 100% Club!" : "Test your math skills and join the 100% Club!"}
+                {isDocked ? "Join the 100% Club!" : "Test your skills and join the 100% Club!"}
             </h3>
 
             {!isDocked && (
