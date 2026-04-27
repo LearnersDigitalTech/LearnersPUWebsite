@@ -51,7 +51,7 @@ const About = () => {
             experience: "Experienced",
             specialization: "Board, CET, NEET, Remedial",
             achievements: "Dedicated Educator",
-            image: "",
+            image: "/faculty/deeparani.png",
             description: "Dedicated and hard working, calm and composed. Love to learn."
         },
         {
