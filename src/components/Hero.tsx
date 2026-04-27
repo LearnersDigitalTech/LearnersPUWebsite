@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import anime from 'animejs';
 import { useLanguage } from '../context/LanguageContext';
 import Counter from './Counter';
@@ -19,14 +20,11 @@ const Hero = () => {
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
     useEffect(() => {
-        // Play the current video
         const currentVideo = videoRefs.current[currentVideoIndex];
         if (currentVideo) {
             currentVideo.currentTime = 0;
             currentVideo.play().catch(e => console.log("Autoplay prevented:", e));
         }
-
-        // Pause other videos
         videoRefs.current.forEach((video, index) => {
             if (index !== currentVideoIndex && video) {
                 video.pause();
@@ -39,7 +37,6 @@ const Hero = () => {
     };
 
     useEffect(() => {
-        // Animate hero section elements
         anime({
             targets: titleRef.current,
             translateY: [50, 0],
@@ -48,7 +45,6 @@ const Hero = () => {
             delay: 300,
             easing: 'easeOutQuart'
         });
-
         anime({
             targets: subtitleRef.current,
             translateY: [30, 0],
@@ -57,7 +53,6 @@ const Hero = () => {
             delay: 600,
             easing: 'easeOutQuart'
         });
-
         anime({
             targets: buttonsRef.current,
             translateY: [20, 0],
@@ -66,7 +61,6 @@ const Hero = () => {
             delay: 900,
             easing: 'easeOutQuart'
         });
-
         anime({
             targets: statsRef.current,
             translateY: [20, 0],
@@ -79,7 +73,6 @@ const Hero = () => {
 
     return (
         <section className="relative pt-16 min-h-screen flex items-center overflow-hidden">
-            {/* Video Background */}
             {/* Video Background Carousel */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
                 <div
@@ -89,9 +82,7 @@ const Hero = () => {
                     {videos.map((src, index) => (
                         <div key={index} className="w-full h-full flex-shrink-0 relative">
                             <video
-                                ref={el => {
-                                    videoRefs.current[index] = el;
-                                }}
+                                ref={el => { videoRefs.current[index] = el; }}
                                 muted
                                 playsInline
                                 className="w-full h-full object-cover"
@@ -103,7 +94,7 @@ const Hero = () => {
                     ))}
                 </div>
             </div>
-            {/* Overlay for better text readability */}
+            {/* Overlay */}
             <div className="absolute top-0 left-0 w-full h-full bg-white/60 -z-10 backdrop-blur-[1px]"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -167,9 +158,21 @@ const Hero = () => {
                             </div>
                         </div> */}
                     </div>
+
+                    {/* Right column: static image */}
+                    <div className="hidden lg:flex items-center justify-center">
+                        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl ring-2 ring-white/30">
+                            <Image
+                                src="/popup/State%207th%20Toppers.png"
+                                alt="State 7th Toppers"
+                                fill
+                                sizes="(max-width: 1024px) 0px, 50vw"
+                                className="object-cover"
+                                priority
+                            />
+                        </div>
+                    </div>
                 </div>
-                {/* Right side intentionally left empty for video visibility */}
-                <div className="hidden lg:block"></div>
             </div>
         </section>
     );
