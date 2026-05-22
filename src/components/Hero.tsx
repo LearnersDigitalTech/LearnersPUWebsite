@@ -163,7 +163,7 @@ const Hero = () => {
                     <div className="hidden lg:flex items-center justify-center">
                         <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl ring-2 ring-white/30">
                             <Image
-                                src="/popup/State%207th%20Toppers.png"
+                                src="/popup/State-7th-Toppers.jpeg"
                                 alt="State 7th Toppers"
                                 fill
                                 sizes="(max-width: 1024px) 0px, 50vw"
